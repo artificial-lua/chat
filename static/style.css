@@ -1,3 +1,8 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+
 #logs{
     min-width: 500px;
     min-height: 250px;
