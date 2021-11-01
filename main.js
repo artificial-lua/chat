@@ -8,7 +8,7 @@ app.get('/index', function(req, res){
     <!DOCTYPE html>
     <body>
         index page
-    </body
+    </body>
     `
     res.send(result)
 })
