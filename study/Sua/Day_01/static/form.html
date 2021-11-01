@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <script type = "text/javascript" src="chat_client.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="default">
+        <textarea id = "default_logs"></textarea><br>
+        <input id="default_message"><br>
+        <button id="input_send" onclick="default_on_click()">send</button>
+    </div>
+    <div id="chat_client">
+    </div>
+</body>
+
+
+<script>
+    function default_on_click(){
+        document.getElementById('default_logs').value += document.getElementById('default_message').value  + '\n';
+        document.getElementById('default_message').value = '';
+    }
+
+    on_load();
+</script>
+
+<style>
+    #default_logs{
+        min-width: 250px;
+        min-height: 250px;
+    }
+
+    #default_message{
+        min-width: 250px;
+    }
+</style>
