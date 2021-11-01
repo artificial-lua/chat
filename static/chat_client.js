@@ -8,5 +8,6 @@ function on_load(){
 }
 
 function on_click_send(){
-
+    document.getElementById('logs').value += document.getElementById('message').value + "\n";
+    document.getElementById('message').value = "";
 }
