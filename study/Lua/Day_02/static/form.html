@@ -35,7 +35,7 @@
     };
     // when message is received
     ws.onmessage = function(e) {
-        // get message from server and unpakcage json
+        // get message from server and unpackage json
         const data = JSON.parse(e.data);
         // get log textarea
         const log = document.getElementById('log');
@@ -54,7 +54,7 @@
     document.getElementById('btn_send').onclick = function() {
         // if message is not empty
         if (document.getElementById('message').value != '') {
-            // send id and message and pakcage them as json to server by websocket
+            // send id and message and package them as json to server by websocket
             ws.send(JSON.stringify({
                 user_id: document.getElementById('user_id').value,
                 message: document.getElementById('message').value
