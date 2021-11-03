@@ -5,13 +5,17 @@
     <title>Form</title>
 </head>
 <body>
-    <h1>웹소켓 테스트</h1>
+    <header>
+        <h1>웹소켓 테스트</h1>
+    </header>
 
     <!--create TextArea to recive messages log-->
-    <textarea id="log" rows="10" cols="50"></textarea>
+    <textarea id="log" rows="10" cols="50" readonly style="resize:none"></textarea>
     
     <!--create input message box-->
     <form>
+        <!--create user id box-->
+        <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요.">
         <input type="text" name="message" placeholder="메시지를 입력하세요." id="message">
         <input type="button" id="btn_send" value="전송">
         <button id="btn_close">close</button>
@@ -19,6 +23,10 @@
 </body>
 </html>
 <script>
+    /*
+    never use jquery
+    */
+    
     // create websocket client by 30000 port
     const ws = new WebSocket('ws://localhost:30000');
     // when connection is opened
@@ -27,10 +35,12 @@
     };
     // when message is received
     ws.onmessage = function(e) {
-        console.log(e.data);
-        // append message to log
-        document.getElementById('log').value += e.data + '\n';
-
+        // get message from server and unpakcage json
+        const data = JSON.parse(e.data);
+        // get log textarea
+        const log = document.getElementById('log');
+        // append message to log textarea
+        log.value += data.user_id + ' : ' + data.message + '\n';
     };
     // when connection is closed
     ws.onclose = function() {
@@ -44,8 +54,11 @@
     document.getElementById('btn_send').onclick = function() {
         // if message is not empty
         if (document.getElementById('message').value != '') {
-            // send message
-            ws.send(document.getElementById('message').value);
+            // send id and message and pakcage them as json to server by websocket
+            ws.send(JSON.stringify({
+                user_id: document.getElementById('user_id').value,
+                message: document.getElementById('message').value
+            }));
             // clear message box
             document.getElementById('message').value = '';
         }

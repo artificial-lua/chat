@@ -15,7 +15,7 @@ wss.on('connection', function(ws) {
         console.log('received: ' + message);
         wss.clients.forEach(function(client) {
             if (client.readyState === ws.OPEN) {
-                client.send(ws.id + " : " + message);
+                client.send(message + "");
             }
         });
     });
