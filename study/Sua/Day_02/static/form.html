@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <!--create message log Textarea-->
+        <textarea id="logs" rows="10" cols="50" readonly></textarea>
+        <!--create input id box-->
+        <input type="text" id="user_id" placeholder="id 입력">
+        <!--create input whisper box-->
+        <input type="text" id="whisper" placeholder="귓속말">
+        <!--create input message box-->
+        <input id="message" type="text" placeholder="메시지 입력">
+        <!--create send button-->
+        <button id="send" onclick="send()">보내기</button>
+        <!--create disconnect button-->
+        <button id="disconnect" onclick="disconnect()">연결끊기</button>
+    </body>
+</html>
+
+<script>
+    const ws = new WebSocket('ws://localhost:30000');
+    
+
+    ws.onopen=function(){
+        console.log('연결 성공');
+    };
+    
+    ws.onmessage=function(event){
+        //to client 
+        console.log(event.data);
+        const data = JSON.parse(event.data);
+
+        if (data.type==='message'){
+        //show message to client through log box
+        document.getElementById('logs').value += data.user_id + ": " + data.message + "\n";
+        }else if(data.type==="info"){
+            user_id = data.user_id;
+            document.getElementById('user_id').value=data.user_id;
+        }
+
+    }
+
+    //to server
+    function send(){
+        const user_id = document.getElementById('user_id').value;
+        const message = document.getElementById('message').value;
+        const whisper = document.getElementById('whisper').value;
+
+        let data = {
+            type: 'message',
+            user_id: user_id,
+            message: message
+        };
+
+        if (whisper !== ''){
+            data.whisper = whisper;
+        }
+
+        ws.send(JSON.stringify(data));
+        document.getElementById('message').value="";
+    }
+
+    function disconnect(){
+        ws.close();
+    }
+
+</script>
