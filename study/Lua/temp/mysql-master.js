@@ -7,25 +7,6 @@ const pool = mysql.createPool({
 });
 const crypto = require('crypto');
 
-async function sql_test(){
-    const connection = await pool.getConnection(async conn => conn);
-
-    const values = ['test_id_000', crypto.createHash('sha256').update('test_hash_000' + 'test_salt_000').digest('base64'), 'test_salt_000'];
-
-    try {
-        await connection.beginTransaction();
-        await connection.query('INSERT INTO test_table (id, password, salt) VALUES (?, ?, ?)', values);
-        await connection.commit();
-        console.log('success!');
-    } catch (err) {
-        await connection.rollback();
-        console.log('error!');
-    } finally {
-        connection.release();
-        return 123;
-    }
-}
-
 async function login_test(query){
     const connection = await pool.getConnection(async conn => conn);
 
