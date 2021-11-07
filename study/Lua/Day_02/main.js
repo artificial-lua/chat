@@ -1,33 +1,56 @@
-//nodejs websocket server
-
 const express = require('express');
 const app = express();
 const ws = require('ws');
-const wss = new ws.Server({port: 30000});
+const wss = new ws.Server({port:30000});
 
 wss.on('connection', function(ws) {
-    // when client first connect, give personal id
-    ws.id = Math.random();
-    console.log('client connected: ' + ws.id);
+    //give client random id number
+    ws.id = Math.floor(Math.random() * 1000000);
+    console.log(ws.id + ": connected");
 
-    // when client send message, broadcast to all clients
-    ws.on('message', function(message) {
-        console.log('received: ' + message);
-        wss.clients.forEach(function(client) {
-            if (client.readyState === ws.OPEN) {
-                client.send(message + "");
-            }
-        });
+    const user_info = {
+        type : 'info',
+        user_id: ws.id
+    }
+    ws.send(JSON.stringify(user_info));
+
+    ws.on('message', function(message){
+        message = message + ""
+        console.log(ws.id + ":" + message);
+        const data = JSON.parse(message);
+        if(data.whisper !== undefined){
+            ws.send(message);
+            //send to target client.id
+            wss.clients.forEach(function(client){
+                if(client.id == data.whisper){
+                    client.send(message);
+                }
+            });
+        }
+        else{
+            //send all client
+            wss.clients.forEach(function(client){
+                client.send(message);
+            });
+        }
     });
 
-    // when client disconnect, send message to all client
-    ws.on('close', function() {
-        wss.clients.forEach(function(client) {
-            client.send('client disconnect');
+    ws.on('close', function(){
+        const data = {
+            type : 'message',
+            user_id: 'system',
+            message: ws.id + "가 연결을 종료했습니다."
+        };
+        wss.clients.forEach(function(client){
+            client.send(JSON.stringify(data));
         });
     });
 });
 
-app.use('/', express.static('static'))
+app.use('/static/', express.static('static'));
 
-app.listen(8080);
+PORT = 8080;
+
+app.listen(PORT, function(){
+    console.log('listening on port ' + PORT);
+})
