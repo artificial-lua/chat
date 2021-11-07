@@ -6,15 +6,15 @@
     <script type="text/javascript" src="rest.js"></script>
     <title>login</title>
     <body>
-        <div id='login_form'>
+        <div id='join'>
             <!-- create id input box -->
             <input type="text" id="id" placeholder="id">
             <!-- create password input box -->
             <input type="password" id="password" placeholder="password">
             <!-- create submit button -->
-            <button id="submit">submit</button>
+            <button id="submit">join</button>
             <!-- create join button -->
-            <button id="join" onclick="location.href='join.html'">join</button>
+            <button id="cancle" onclick="location.href='form.html'">cancle</button>
         </div>
     </body>
     <script>
@@ -25,7 +25,7 @@
             var password = document.getElementById("password").value;
 
             // REST API 실행하는 내용
-            rest("/login?id=" + id + "&password=" + password, "GET");
+            rest("/user_reg?id=" + id + "&password=" + password, "GET");
         });
     </script>
 </html>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { login } = require('./mysql-master');
+const { login, register } = require('./mysql-master');
 const app = express();
 
 PORT = 8080;
@@ -10,6 +10,16 @@ app.get('/login', async(req, res) => {
     const query = req.query;
 
     result = await login(query)
+    
+    res.send(result);
+});
+
+app.get('/user_reg', async(req, res) => {
+    const query = req.query;
+
+    result = await register(query);
+
+    console.log(result);
     
     res.send(result);
 });
