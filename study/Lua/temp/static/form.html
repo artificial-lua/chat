@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="cookie.js"></script>
+    <title>login</title>
+    <body>
+        <div id='login_form'>
+            <!-- create id input box -->
+            <input type="text" id="id" placeholder="id">
+            <!-- create password input box -->
+            <input type="password" id="password" placeholder="password">
+            <!-- create submit button -->
+            <button id="submit">submit</button>
+            <!-- create join button -->
+            <button id="join">join</button>
+        </div>
+    </body>
+    <script>
+        var debug = true;
+
+        function print(a){
+            if(debug){
+                console.log(a)
+            }
+        }
+
+        // REST API 실행하는 내용
+        function rest(url){
+
+            print("url : " + url)
+            // XMLHttpRequest 객체의 인스턴스를 생성합니다.
+            var xhr = new XMLHttpRequest();
+
+            xhr.onload = function () {
+                // xhr 객체의 status 값을 검사한다.
+                if (xhr.status === 200) {
+                    print(xhr.responseText)
+                }
+            }
+
+            // open() 메서드는 요청을 준비하는 메서드입니다. (http 메서드, 데이터를 받아올 URL 경로, 비동기 여부)
+            xhr.open("GET", url, true);
+
+            // send() 메서드는 준비된 요청을 서버로 전송하는 메서드입니다. (서버에 전달될 정보)
+            xhr.send("");
+        }
+
+        // click submit button then login process
+        document.getElementById("submit").addEventListener("click", function () {
+            // get id and password
+            var id = document.getElementById("id").value;
+            var password = document.getElementById("password").value;
+
+            // REST API 실행하는 내용
+            rest("/login?id=" + id + "&password=" + password);
+        });
+    </script>
+</html>

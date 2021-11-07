@@ -17,3 +17,4 @@ JS 스터디를 위한 Project
 - mysql 연동
 - id, pw 회원가입
 - hash, salt 개념 학습 및 구현
+- cookie, session을 사용한 로그인 구현
