@@ -1,71 +1,60 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head> 
-    <meta charset="UTF-8">
-    <title>Form</title>
-</head>
-<body>
-    <header>
-        <h1>웹소켓 테스트</h1>
-    </header>
-
-    <!--create TextArea to recive messages log-->
-    <textarea id="log" rows="10" cols="50" readonly style="resize:none"></textarea>
-    
-    <!--create input message box-->
-    <form>
-        <!--create user id box-->
-        <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요.">
-        <input type="text" name="message" placeholder="메시지를 입력하세요." id="message">
-        <input type="button" id="btn_send" value="전송">
-        <button id="btn_close">close</button>
-    <!-- create two buttons -->
-</body>
+<html>
+    <body>
+        <!--create log Textarea-->
+        <textarea id="logs" rows="10" cols="50" readonly></textarea>
+        <!--create input user_id box-->
+        <input type="text" id="user_id" placeholder="id 입력" readonly>
+        <!--create input whisper box-->
+        <input type="text" id="whisper" placeholder="whisper 입력">
+        <!--create input message box-->
+        <input id="message" type="text" placeholder="메시지 입력">
+        <!--create send button-->
+        <button id="send" onclick="send()">보내기</button>
+        <!--create disconnect button-->
+        <button id="disconnect" onclick="disconnect()">연결 끊기</button>
+    </body>
 </html>
 <script>
-    /*
-    never use jquery
-    */
-    
-    // create websocket client by 30000 port
     const ws = new WebSocket('ws://localhost:30000');
-    // when connection is opened
-    ws.onopen = function() {
-        console.log('connection is opened');
+
+    ws.onopen = function () {
+        console.log('연결 성공');
     };
-    // when message is received
-    ws.onmessage = function(e) {
-        // get message from server and unpackage json
+
+    function events(e) {
+        console.log(e.data);
         const data = JSON.parse(e.data);
-        // get log textarea
-        const log = document.getElementById('log');
-        // append message to log textarea
-        log.value += data.user_id + ' : ' + data.message + '\n';
-    };
-    // when connection is closed
-    ws.onclose = function() {
-        console.log('connection is closed');
-    };
-    // when error occurs
-    ws.onerror = function(e) {
-        console.log('error occurs');
-    };
-    // when send button is clicked
-    document.getElementById('btn_send').onclick = function() {
-        // if message is not empty
-        if (document.getElementById('message').value != '') {
-            // send id and message and package them as json to server by websocket
-            ws.send(JSON.stringify({
-                user_id: document.getElementById('user_id').value,
-                message: document.getElementById('message').value
-            }));
-            // clear message box
-            document.getElementById('message').value = '';
+        if (data.type === 'message') {
+            document.getElementById('logs').value += data.user_id + " : " + data.message + "\n";
         }
-    };
-    // when close button is clicked
-    document.getElementById('btn_close').onclick = function() {
-        // close connection
+        else if (data.type === 'info'){
+            document.getElementById('user_id').value = data.user_id;
+        }
+    }
+
+    ws.onmessage = events;
+
+    function send() {
+        const user_id = document.getElementById('user_id').value;
+        const message = document.getElementById('message').value;
+        const whisper = document.getElementById('whisper').value;
+
+        //package user_id and message to json
+        let data = {
+            type: 'message',
+            user_id: user_id,
+            message: message
+        };
+        if (whisper !== '') {
+            data.whisper = whisper;
+        }
+        //send message to server
+        ws.send(JSON.stringify(data));
+        document.getElementById('message').value = "";
+    }
+
+    function disconnect() {
         ws.close();
-    };
+    }
 </script>
