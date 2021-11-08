@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>login</title>
+        <script type="text/javascript" src="rest.js"></script>
+    </head>
+    <body>
+        <div id='login'>
+            <input type='text', id='id', placeholder='id'>
+            <input type='password', id='password', placeholder='password'>
+            <button id='submit' onclick="login()">login</button>
+            <button id='join' onclick="location.href='join.html'">join</button>
+        </div>
+    </body>
+    <script>
+    function login() {
+        const id = document.getElementById('id').value;
+        const password = document.getElementById('password').value;
+
+        rest("/login?id=" + id + "&password=" + password, "GET")
+    }
+    </script>
+</html>
