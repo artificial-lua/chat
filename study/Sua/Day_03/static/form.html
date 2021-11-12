@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <title>login</title>
         <script type="text/javascript" src="rest.js"></script>
+        <script type="text/javascript" src="cookie.js"></script>
     </head>
+
     <body>
         <input type='text', id='id', placeholder="id">
         <input type='password'm id='password', placeholder="password">
@@ -16,7 +18,14 @@
             var id = document.getElementById('id').value;
             var password = document.getElementById('password').value;
 
-            rest("/login?id=" + id + "&password=" + password, "GET");
+            rest("/login?id=" + id + "&password=" + password, "GET", (response)=>{
+                if (!response.error){
+                    setCookie("id",id);
+                    setCookie("password",password);
+                }else{
+                    alert("제대로된걸로 좀 해주세요")
+                }
+            });
         }
     </script>
 </html>

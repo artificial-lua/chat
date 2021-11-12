@@ -10,6 +10,7 @@ const pool = mysql.createPool(
 );
 
 const crypto = require('crypto');
+const { fstat } = require('fs');
 console.log('start server')
 
 //create join method
@@ -87,7 +88,7 @@ async function login_user(query){
 exports.login=login_user;
 
 //비동기가 포함되었다를 나타내기 위해 async
-async function register_user(query){
+async function register_user(query){ //main.js에서 알아서 나중에 찾아봐~~
     const connection = await pool.getConnection();
 
     let response = {};
@@ -99,7 +100,6 @@ async function register_user(query){
     const hash = make_hash(password,salt);
 
     try{
-
         await connection.beginTransaction();
         let data = await connection.query('insert into user_info_table (id, password, salt) values(?,?,?)', [id,hash,salt]);
         await connection.commit();
@@ -107,6 +107,7 @@ async function register_user(query){
 
         response.error = false;
         response.message = 'success';
+
 
     }catch(err){
         console.log(err);
