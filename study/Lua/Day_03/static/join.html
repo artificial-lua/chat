@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>join</title>
+        <script type="text/javascript" src="rest.js"></script>
+    </head>
+    <body>
+        <div id='join'>
+            <input type='text', id='id', placeholder='id'>
+            <input type='password', id='password', placeholder='password'>
+            <button id='submit' onclick="join()">join</button>
+            <button id='cancle' onclick="location.href='form.html'">cancle</button>
+        </div>
+    </body>
+    <script>
+        function join() {
+            const id = document.getElementById('id').value;
+            const password = document.getElementById('password').value;
+
+            rest("/user_reg?id=" + id + "&password=" + password, "GET")
+        }
+    </script>
+</html>
