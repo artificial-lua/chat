@@ -328,150 +328,54 @@ const diceset = new DiceSet(5, 6);
 const player1 = new YachtPlayer('player1');
 const player2 = new YachtPlayer('player2');
 
+console.log(diceset.getEachNum());
 
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.aces.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.aces.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-console.log('end of aces');
+player1.getScoreBoard().scores.choice.calculation(diceset, true);
 
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.deuces.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.deuces.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
+console.log(player1.getScoreBoard().getScore());
 
-console.log('end of deuces');
+// while(true){
+//     // console.log(diceset.getEachNum());
+//     let score;
+//     if ((score = player1.getScoreBoard().scores.full_house.calculation(diceset, false)) >= 1){
+//         console.log(score);
+//         player1.getScoreBoard().scores.full_house.calculation(diceset, true);
+//         break;
+//     }
+//     diceset.rollAll();
+// }
 
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.threes.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.threes.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
+// while(true){
+//     // console.log(diceset.getEachNum());
+//     let score;
+//     if ((score = player1.getScoreBoard().scores.small_straight.calculation(diceset, false)) >= 1){
+//         console.log(score);
+//         player1.getScoreBoard().scores.small_straight.calculation(diceset, true);
+//         break;
+//     }
+//     diceset.rollAll();
+// }
 
-console.log('end of threes');
+// while(true){
+//     // console.log(diceset.getEachNum());
+//     let score;
+//     if ((score = player1.getScoreBoard().scores.large_straight.calculation(diceset, false)) >= 1){
+//         console.log(score);
+//         player1.getScoreBoard().scores.large_straight.calculation(diceset, true);
+//         break;
+//     }
+//     diceset.rollAll();
+// }
 
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.fours.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.fours.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
+// while(true){
+//     // console.log(diceset.getEachNum());
+//     let score;
+//     if ((score = player1.getScoreBoard().scores.yacht.calculation(diceset, false)) >= 1){
+//         console.log(score);
+//         player1.getScoreBoard().scores.yacht.calculation(diceset, true);
+//         break;
+//     }
+//     diceset.rollAll();
+// }
 
-console.log('end of fours');
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.fives.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.fives.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-console.log('end of fives');
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.sixes.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.sixes.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-console.log('end of sixes');
-
-console.log('^ category aces ~ sixes : ' + player1.getScoreBoard().subtotal());
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.choice.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.choice.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.four_of_a_kind.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.four_of_a_kind.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.full_house.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.full_house.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.small_straight.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.small_straight.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.large_straight.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.large_straight.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-while(true){
-    // console.log(diceset.getEachNum());
-    let score;
-    if ((score = player1.getScoreBoard().scores.yacht.calculation(diceset, false)) >= 1){
-        console.log(score);
-        player1.getScoreBoard().scores.yacht.calculation(diceset, true);
-        break;
-    }
-    diceset.rollAll();
-}
-
-console.log(player1.getScore());
+// console.log(player1.getScore());
