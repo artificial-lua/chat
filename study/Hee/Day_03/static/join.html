@@ -7,18 +7,21 @@
     </head>
     <body>
         <div id='join'>
-            <input type='text', id='id', placeholder='id'>
-            <input type='password', id='password', placeholder='password'>
-            <button id='submit' onclick="join()">join</button>
-            <button id='cancle' onclick="location.href='form.html'">cancle</button>
+            <input type='text' id='id' placeholder="id">
+            <input type='password' id='password' placeholder="password">
+            <button id='submit' onclick='join()'>join</button>
+            <button id='cancel'>cancel</button>
         </div>
     </body>
     <script>
-        function join() {
+        
+        function join(){
             const id = document.getElementById('id').value;
             const password = document.getElementById('password').value;
+            
+            rest("/user_reg?id=" + id + "&password=" + password, "GET");
 
-            rest("/user_reg?id=" + id + "&password=" + password, "GET")
         }
+
     </script>
 </html>
